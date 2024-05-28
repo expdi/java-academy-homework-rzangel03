@@ -1,6 +1,7 @@
 package org.example.adoptionsb.Classes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +25,8 @@ public class Pet {
     private String petBreedType;
 
     @ManyToOne
-    @JsonIgnore
+    @Getter(onMethod_ = @__(@JsonIgnore))
+    @Setter(onMethod_ = @__(@JsonProperty))
     @JoinColumn(name = "idadopter")
     private Adopter adopter;
 

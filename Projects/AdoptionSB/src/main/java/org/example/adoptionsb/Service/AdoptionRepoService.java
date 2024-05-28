@@ -43,13 +43,13 @@ public class AdoptionRepoService {
         return adopterDAO.findAll();
     }
 
-    public AdopterDAO getAdopterDAO() {
-        return adopterDAO;
-    }
-
-    public void setAdopterDAO(AdopterDAO adopterDAO) {
-        this.adopterDAO = adopterDAO;
-    }
+//    public AdopterDAO getAdopterDAO() {
+//        return adopterDAO;
+//    }
+//
+//    public void setAdopterDAO(AdopterDAO adopterDAO) {
+//        this.adopterDAO = adopterDAO;
+//    }
 
     public List<Adopter> getAdoptersByName(String name) {
         return this.adopterDAO.findByName(name);

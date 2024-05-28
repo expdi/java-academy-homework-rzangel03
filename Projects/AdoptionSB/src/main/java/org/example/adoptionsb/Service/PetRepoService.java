@@ -1,6 +1,7 @@
 package org.example.adoptionsb.Service;
 
 import org.example.adoptionsb.Classes.Pet;
+import org.example.adoptionsb.DAO.AdopterDAO;
 import org.example.adoptionsb.DAO.PetDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,8 @@ import java.util.List;
 public class PetRepoService {
     @Autowired
     public PetDAO petDAO;
+    @Autowired
+    public AdopterDAO adopterDAO;
 
     public Pet addPet(Pet pet) {
         return petDAO.save(pet);

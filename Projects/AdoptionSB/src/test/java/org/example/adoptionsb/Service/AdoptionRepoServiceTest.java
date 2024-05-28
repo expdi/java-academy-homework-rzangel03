@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ActiveProfiles({"h2"})
 @SpringBootTest
@@ -43,14 +44,46 @@ class AdoptionRepoServiceTest {
     @Test
     public void testDeleteAdopter() {
         Adopter adopter1 = adoptionRepoService.addAdopter(adopter);
-        Course course2 = courseService.createCourse(code2, title2);
+        Adopter adopter3 = adoptionRepoService.addAdopter(adopter2);
 
-        assertEquals(5, courseService.getAllCourses().size());
+        assertEquals(11, adoptionRepoService.getAllAdopters().size());
 
-        courseService.deleteCourse(course1.getId());
+        adoptionRepoService.deleteAdopter(adopter1.getIdAdopter());
 
-        List<Course> courses = courseService.getAllCourses();
-        assertEquals(4, courses.size());
-        assertEquals(title2, courseService.getCourse(course2.getId()).getTitle());
+        List<Adopter> adopters = adoptionRepoService.getAllAdopters();
+        assertEquals(10, adopters.size());
+        assertEquals(adopter2.getAdopterName(), adoptionRepoService.findById(adopter2.getIdAdopter()).getAdopterName());
+    }
+
+    @Test
+    public void testDeleteNonExistentAdopter() {
+        Adopter adopter1 = adoptionRepoService.addAdopter(adopter);
+        Adopter adopter3 = adoptionRepoService.addAdopter(adopter2);
+
+        assertEquals(11, adoptionRepoService.getAllAdopters().size());
+
+        // Nonexistent id
+        adoptionRepoService.deleteAdopter(9999);
+
+        assertEquals(11, adoptionRepoService.getAllAdopters().size());
+    }
+
+    @Test
+    public void testUpdateAdopter() {
+        Adopter adopter1 = adoptionRepoService.addAdopter(adopter);
+        System.out.println(adoptionRepoService.getAllAdopters());
+        assertEquals(10, adoptionRepoService.getAllAdopters().size());
+
+        adopter1.setAdopterName("Angel Updated");
+        adoptionRepoService.updateAdopter(adopter1);
+        List<Adopter> adopters = adoptionRepoService.getAllAdopters();
+        System.out.println(adopters);
+        assertEquals(10, adoptionRepoService.getAllAdopters().size());
+        assertEquals(adopter.getAdopterName(), adoptionRepoService.findById(adopter1.getIdAdopter()).getAdopterName());
+    }
+
+    @Test
+    public void testGetAdopterByName() {
+        assertNotNull(adoptionRepoService.getAdoptersByName("James"));
     }
 }
